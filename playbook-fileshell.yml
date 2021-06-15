@@ -1,0 +1,26 @@
+---
+- name: A simple file playbook
+  hosts: planetexpress    # group from our inventory
+  gather_facts: no    # no need to run the module, setup.py to collect facts 
+  connection: ssh     # this is the default connection "plugin", ssh.py
+
+  tasks:
+   - name: make a directory
+     file:     # reference to our "module", file.py
+       path: ~/output/     # param "path"  - create this path if it does not exist
+       state: directory    # param "state" - we want a directory to be created
+                           # other states include "absent", and "present" (present is for creating files)
+           
+
+     #- name: use shell module with wildcarding
+     #  shell: echo $HOME >> ~/output/path.txt
+                          # the shell module lets us use characters such as, >, >>, <, <<, |, & (wildcards)
+                          # however there is USUALLY a way to circumvent using these wildcards
+                          # the thought is they can be "unpredictable"
+                          #
+                          # the shell module is also notoriously NOT idempotent
+                          #
+   - name: retrieve the value of $HOME and write it into ~/output/path.txt
+     copy:
+             content: "{{ lookup('env', 'HOME') }}"   # this is a "variable"
+             dest: ~/output/path.txt  # this is the destination of the file we want created on remote hosts
