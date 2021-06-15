@@ -1,0 +1,15 @@
+---
+- name: Playbook - Discover what ansible_facts are available  # metadata
+  hosts: fry  # we want to run only against this host 
+  connection: ssh     # default is to use the connection plugin ssh.py
+  gather_facts: yes   # when this runs, it defines a "root" variable called "ansible_facts"
+
+
+  tasks:                             # a list of what we want to do 
+  - name: Display the facts we collected  # metadata
+    debug:                     # the module we want to run, debug.py
+      var: ansible_facts         # display the value of the variable ansible_facts
+
+  - name: Display the facts we collected  # metadata
+    debug:                     # the module we want to run, debug.py
+      var: ansible_facts.keys()         # display "JUST" the values to the RIGHT of the the colons
