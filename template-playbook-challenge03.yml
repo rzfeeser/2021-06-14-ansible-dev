@@ -1,0 +1,33 @@
+---
+- name: Exploring the template module and jinja expressions
+  hosts: planetexpress
+  gather_facts: no   # runs the "setup" module on remote hosts
+
+  # these variables are used to build templates
+  vars_files:
+    - vars/planetexpress.yml
+
+
+  tasks:
+    - name: Configure spaceship registration
+      template:
+        src: templates/ship.cfg.j2    # name of the template on ansible controller
+        dest: ~/ship.cfg              # name of the completed file to be placed on the target system
+
+    - name: Configure mission orders
+      template:
+        src: templates/mission-orders.txt.j2    # name of the template on ansible controller
+        dest: ~/mission-orders.txt              # name of the completed file to be placed on the target system
+
+
+    ## CHALLENGE 03 - SOLUTION
+    #
+    - name: Challenge 03 - Solution
+      template:
+        src: templates/mission-orders.txt.j2     # name of the template on ansible controller
+        dest: "~/{{ item.mission }}-mission-orders.txt"  # each time through the loop, we want a file named uniquely
+      vars:
+              planet: "{{ item.planet }}"
+      loop:   # each time through the loop, each dict (list entry) will be an "item"
+              - {"mission": "primary", "planet": "luna park"}
+              - {"mission": "secondary", "planet": "cineplex 14"}  ## This is the list we want to loop across

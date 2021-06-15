@@ -1,0 +1,14 @@
+---
+- name: Learning how to use git module
+  hosts: planetexpress
+  connection: ssh   # default connection type
+  gather_facts: no
+
+  tasks:
+
+  - name: "Create a git archive from a repository"
+    git:
+        repo: https://github.com/ansible/ansible-examples.git   # repository we want to copy (clone)
+        dest: ~/ansible-examples/                               # location we want to clone TO (on the remote hosts)
+        archive: /tmp/ansible-examples.backup.zip               # ALSO take the CLONED repo and ZIP it up, then store in this location
+                                                                                                # (on remote hosts)

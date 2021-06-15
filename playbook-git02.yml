@@ -1,0 +1,11 @@
+---
+- name: Using Ansible to clone a repository to the localhost
+  hosts: localhost
+  connection: local    # we want to use the connection plugin, local.py (not the default ssh.py)
+  gather_facts: no     # no needs to define ansible_facts
+
+  tasks:
+          - name: clone a repository from the course author
+            git:
+                    repo: https://github.com/rzfeeser/ansibleexamples   # this is the repository we want to clone
+                    dest: ~/best-practice-examples/   # this is where we want the repository to be created
