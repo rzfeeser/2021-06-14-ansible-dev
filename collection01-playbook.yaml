@@ -1,0 +1,11 @@
+- name: Using a Collection
+  hosts: localhost
+
+  collections:
+  - adalovelace.myfirstcollection
+
+  tasks:
+  - name: Example of how to use a collection
+    debug:
+      msg: "Any new modules, roles, or other distributables included in the role would not be usable!"
+

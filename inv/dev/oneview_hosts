@@ -1,0 +1,21 @@
+# sample inventory with 3 groups
+# "host_vars" are being used to pass unique values to our HPE OneView Playbook
+# OneView appliance manages multiple HPE Proliant devices behind it (max cap ~1000)
+# https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#understanding-variable-precedence
+[oneview-west]
+oneview-01   user=hpeuser    ip=192.168.73.64
+oneview-02   user=hpeuser    ip=192.168.23.64
+
+# these are "group_vars" and passed to the group "oneview-west"
+[oneview-west:vars]
+pw=hpeSeekRITpasswurd!!
+
+[oneview-east]
+oneview-03    user=chip      ip=192.168.33.10  pw=acorn11
+oneview-04    user=gadget    ip=192.168.23.12  pw=inventionz88
+oneview-05    user=monterey  ip=172.32.12.22   pw=cheezy21
+
+# unified-campus is a "group of groups"
+[unified-campus:children]
+oneview-west
+oneview-east
